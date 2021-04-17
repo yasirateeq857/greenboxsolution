@@ -63,7 +63,8 @@ void USBDeviceStatusForm::initialize()
 
             //libusbobj->exchange_input_and_output_reports_via_interrupt_transfers(devh);
             //In our STM32F446 only 2 bytes control transfer is found by me @ 07-03-2021
-            libusbobj->exchange_input_and_output_reports_via_control_transfers(devh);
+            //libusbobj->exchange_input_and_output_reports_via_control_transfers(devh);
+            libusbobj->exchange_input_and_output_reports_via_interrupt_transfers(devh);
 
             //libusbobj->exchange_feature_reports_via_control_transfers(devh);
 

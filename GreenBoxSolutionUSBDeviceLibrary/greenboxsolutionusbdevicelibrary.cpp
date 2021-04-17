@@ -121,7 +121,8 @@ int GreenBoxSolutionUSBDeviceLibrary::exchange_input_and_output_reports_via_cont
         // Store example data in the output buffer for sending.
         // This example uses binary data.
 
-        for (i=0;i < MAX_CONTROL_OUT_TRANSFER_SIZE-10; i++)
+
+        for (i=0;i < MAX_CONTROL_OUT_TRANSFER_SIZE; i++)
         {
             data_out[i]=i;
         }
@@ -142,10 +143,11 @@ int GreenBoxSolutionUSBDeviceLibrary::exchange_input_and_output_reports_via_cont
 
         if (bytes_sent >= 0)
         {
-            qDebug("Output report data sent:\n");
+            QDebug out_pr = qDebug();
+            qDebug("Output report data ->:\n");
             for(i = 0; i < bytes_sent; i++)
             {
-                qDebug("%d ",data_out[i]);
+               out_pr<<data_out[i];
             }
             qDebug("\n");
 
@@ -164,10 +166,11 @@ int GreenBoxSolutionUSBDeviceLibrary::exchange_input_and_output_reports_via_cont
 
             if (bytes_received >= 0)
             {
-                qDebug("Input report data received:\n");
-                for(i = 0; i < bytes_received; i++)
+                QDebug in_pr = qDebug();
+                qDebug("Input report data <-:\n");
+                for(i = 0; i < 32; i++)
                 {
-                    qDebug("%d ",data_in[i]);
+                  in_pr<<data_in[i];
                 }
                 qDebug("\n");
             }
@@ -203,8 +206,8 @@ int GreenBoxSolutionUSBDeviceLibrary::exchange_input_and_output_reports_via_inte
 
         // With firmware support, transfers can be > the endpoint's max packet size.
 
-        static const int MAX_INTERRUPT_IN_TRANSFER_SIZE = 2;
-        static const int MAX_INTERRUPT_OUT_TRANSFER_SIZE = 2;
+        static const int MAX_INTERRUPT_IN_TRANSFER_SIZE = 32;
+        static const int MAX_INTERRUPT_OUT_TRANSFER_SIZE = 32;
 
         int bytes_transferred;
         int i = 0;
